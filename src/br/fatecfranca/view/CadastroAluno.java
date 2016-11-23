@@ -1,8 +1,9 @@
-
 package br.fatecfranca.view;
 
 import br.fatecfranca.controller.AlunoController;
-import br.fatecfranca.model.AlunoModel;
+import br.fatecfranca.model.fatec_aluno;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -11,12 +12,13 @@ import javax.swing.JOptionPane;
  */
 public class CadastroAluno extends javax.swing.JFrame {
 
-    /** Creates new form CadastroAluno */
+    /**
+     * Creates new form CadastroAluno
+     */
     public CadastroAluno() {
         initComponents();
     }
 
-  
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -196,47 +198,44 @@ public class CadastroAluno extends javax.swing.JFrame {
 private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 // TODO add your handling code here:
     // cria um objeto da classe Aluno
-    AlunoModel aluno = new AlunoModel();
+    fatec_aluno aluno = new fatec_aluno();
     // atribui os valores do usuário
-    aluno.setCidade(cidade.getText());
-    aluno.setCpf(cpf.getText());
+    aluno.setcidade(cidade.getText());
+    aluno.setcpf(cpf.getText());
     String doc = "";
-    if (em.isSelected()){
+    if (em.isSelected()) {
         doc = doc + " ensino médio";
     }
-    if (militar.isSelected()){
+    if (militar.isSelected()) {
         doc = doc + " militar";
     }
-    if (contrato.isSelected()){
+    if (contrato.isSelected()) {
         doc = doc + " contrato";
     }
-    aluno.setDocumentos(doc);
-    aluno.setEndereco(endereco.getText());
-    aluno.setEstado(estado.getSelectedItem().toString());
-    aluno.setNome(nome.getText());
-    aluno.setRg(rg.getText());
+    aluno.setdocumentos(doc);
+    aluno.setendereco(endereco.getText());
+    aluno.setestado(estado.getSelectedItem().toString());
+    aluno.setnome(nome.getText());
+    aluno.setrg(rg.getText());
     String sexo = "";
-    if (masculino.isSelected()){
+    if (masculino.isSelected()) {
         sexo = "masculino";
-    }
-    else {
+    } else {
         sexo = "feminino";
     }
-    aluno.setSexo(sexo);
-    
+    aluno.setsexo(sexo);
+
     // view acessa o controller e recebe o resultado
     AlunoController alunoController = new AlunoController();
-    if (alunoController.insere(aluno) == 1){
-        JOptionPane.showMessageDialog(null, 
-                "Inserção com sucesso");
-    }
-    else {
-        JOptionPane.showMessageDialog(null, 
-                "Problema na Inserção");
+    try {
+        alunoController.insere(aluno);
+        JOptionPane.showMessageDialog(null, "Inserção com sucesso");
+    } catch (Exception ex) {
+        JOptionPane.showMessageDialog(null, "Erro ao inserir aluno");
     }
 }//GEN-LAST:event_jButton1ActionPerformed
 
-   public static void main(String args[]) {
+    public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.

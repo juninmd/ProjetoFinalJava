@@ -1,22 +1,24 @@
-
 package br.fatecfranca.view;
 
-import br.fatecfranca.controller.AlunoController;
-import br.fatecfranca.model.AlunoModel;
+import br.fatecfranca.controller.ProfessorController;
+import br.fatecfranca.model.fatec_professor;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
  *
- * @author aluno
+ * @author professor
  */
 public class CadastroProfessor extends javax.swing.JFrame {
 
-    /** Creates new form CadastroAluno */
+    /**
+     * Creates new form CadastroProfessor
+     */
     public CadastroProfessor() {
         initComponents();
     }
 
-  
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -194,49 +196,46 @@ public class CadastroProfessor extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
 private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-// TODO add your handling code here:
-    // cria um objeto da classe Aluno
-    AlunoModel aluno = new AlunoModel();
-    // atribui os valores do usuário
-    aluno.setCidade(cidade.getText());
-    aluno.setCpf(cpf.getText());
-    String doc = "";
-    if (em.isSelected()){
-        doc = doc + " ensino médio";
-    }
-    if (militar.isSelected()){
-        doc = doc + " militar";
-    }
-    if (contrato.isSelected()){
-        doc = doc + " contrato";
-    }
-    aluno.setDocumentos(doc);
-    aluno.setEndereco(endereco.getText());
-    aluno.setEstado(estado.getSelectedItem().toString());
-    aluno.setNome(nome.getText());
-    aluno.setRg(rg.getText());
-    String sexo = "";
-    if (masculino.isSelected()){
-        sexo = "masculino";
-    }
-    else {
-        sexo = "feminino";
-    }
-    aluno.setSexo(sexo);
-    
-    // view acessa o controller e recebe o resultado
-    AlunoController alunoController = new AlunoController();
-    if (alunoController.insere(aluno) == 1){
-        JOptionPane.showMessageDialog(null, 
-                "Inserção com sucesso");
-    }
-    else {
-        JOptionPane.showMessageDialog(null, 
-                "Problema na Inserção");
+    try {
+        // TODO add your handling code here:
+        // cria um objeto da classe Professor
+        fatec_professor professor = new fatec_professor();
+        // atribui os valores do usuário
+        professor.setcidade(cidade.getText());
+        professor.setcpf(cpf.getText());
+        String doc = "";
+        if (em.isSelected()) {
+            doc = doc + " ensino médio";
+        }
+        if (militar.isSelected()) {
+            doc = doc + " militar";
+        }
+        if (contrato.isSelected()) {
+            doc = doc + " contrato";
+        }
+        professor.setdocumentos(doc);
+        professor.setendereco(endereco.getText());
+        professor.setestado(estado.getSelectedItem().toString());
+        professor.setnome(nome.getText());
+        professor.setrg(rg.getText());
+        String sexo = "";
+        if (masculino.isSelected()) {
+            sexo = "masculino";
+        } else {
+            sexo = "feminino";
+        }
+        professor.setsexo(sexo);
+
+        // view acessa o controller e recebe o resultado
+        ProfessorController professorController = new ProfessorController();
+        professorController.insere(professor);
+        JOptionPane.showMessageDialog(null, "Inserção com sucesso");
+    } catch (Exception ex) {
+        JOptionPane.showMessageDialog(null, "Inserção com sucesso");
     }
 }//GEN-LAST:event_jButton1ActionPerformed
 
-   public static void main(String args[]) {
+    public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -247,16 +246,24 @@ private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
+
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(CadastroProfessor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CadastroProfessor.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(CadastroProfessor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CadastroProfessor.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(CadastroProfessor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CadastroProfessor.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(CadastroProfessor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CadastroProfessor.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
         //</editor-fold>

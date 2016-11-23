@@ -1,16 +1,21 @@
-
 package br.fatecfranca.view;
 
-import br.fatecfranca.controller.AlunoController;
-import br.fatecfranca.model.AlunoModel;
+import br.fatecfranca.controller.ProfessorController;
+import br.fatecfranca.model.fatec_professor;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 public class ConsultaProfessor extends javax.swing.JFrame {
+
     private DefaultTableModel modeloTabela;
-    private ArrayList<AlunoModel> alunos;
-    /** Creates new form ConsultaAluno */
+    private ArrayList<fatec_professor> professors;
+
+    /**
+     * Creates new form ConsultaAluno
+     */
     public ConsultaProfessor() {
         initComponents();
         // recupera modelo da tabela
@@ -111,69 +116,72 @@ public class ConsultaProfessor extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-public void atualizaTabela(){
-          btnRemove.setEnabled(false);
-          btnAtualiza.setEnabled(false);
-    AlunoController alunoController = new
-            AlunoController();
-    alunos = (ArrayList) alunoController.consulta();
-    // limpa a tabela
-    modeloTabela.setRowCount(0);
-    // alimenta tabela
-    if (alunos == null) {
-        JOptionPane.showMessageDialog(null, 
-                "Problema na consulta");
-    }
-    else if (alunos.isEmpty()){
-            JOptionPane.showMessageDialog(null, 
-                    "Não foram encontrados alunos");
-        }
-        else {
+    public void atualizaTabela() throws Exception {
+        btnRemove.setEnabled(false);
+        btnAtualiza.setEnabled(false);
+        ProfessorController professorController = new ProfessorController();
+        professors = (ArrayList) professorController.consulta();
+        // limpa a tabela
+        modeloTabela.setRowCount(0);
+        // alimenta tabela
+        if (professors == null) {
+            JOptionPane.showMessageDialog(null,
+                    "Problema na consulta");
+        } else if (professors.isEmpty()) {
+            JOptionPane.showMessageDialog(null,
+                    "Não foram encontrados professors");
+        } else {
             Object objetos[] = new Object[9];
-            for (AlunoModel aluno: alunos){ // para cada aluno
-                objetos[0] = aluno.getCodigo();
-                objetos[1] = aluno.getNome();
-                objetos[2] = aluno.getEndereco();
-                objetos[3] = aluno.getCidade();
-                objetos[4] = aluno.getEstado();
-                objetos[5] = aluno.getCpf();
-                objetos[6] = aluno.getRg();
-                objetos[7] = aluno.getSexo();
-                objetos[8] = aluno.getDocumentos();
+            for (fatec_professor professor : professors) { // para cada professor
+                objetos[0] = professor.getcodigo();
+                objetos[1] = professor.getnome();
+                objetos[2] = professor.getendereco();
+                objetos[3] = professor.getcidade();
+                objetos[4] = professor.getestado();
+                objetos[5] = professor.getcpf();
+                objetos[6] = professor.getrg();
+                objetos[7] = professor.getsexo();
+                objetos[8] = professor.getdocumentos();
                 modeloTabela.addRow(objetos);
             }
-        } 
-}
+        }
+    }
 private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-// TODO add your handling code here:
-   atualizaTabela();
+    try {
+        // TODO add your handling code here:
+        atualizaTabela();
+    } catch (Exception ex) {
+        Logger.getLogger(ConsultaProfessor.class.getName()).log(Level.SEVERE, null, ex);
+    }
 }//GEN-LAST:event_jButton1ActionPerformed
 
 private void tabelaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaMouseClicked
 // TODO add your handling code here:
-      btnRemove.setEnabled(true);
-      btnAtualiza.setEnabled(true);
+    btnRemove.setEnabled(true);
+    btnAtualiza.setEnabled(true);
 }//GEN-LAST:event_tabelaMouseClicked
 
 private void btnRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveActionPerformed
 // TODO add your handling code here:
-    int resposta = 
-   JOptionPane.showConfirmDialog(null, "Confirma exclusão?");
-    
-    if (resposta == JOptionPane.YES_OPTION){
-        // recupera a linha selecionada
-        int linha = tabela.getSelectedRow();
-        int codigo = 
-Integer.parseInt(modeloTabela.getValueAt(linha, 0).toString());
-        AlunoModel aluno = new AlunoModel();
-        aluno.setCodigo(codigo);
-        AlunoController alunoController = new AlunoController();
-        if (alunoController.remove(aluno) == 1){
+    int resposta
+            = JOptionPane.showConfirmDialog(null, "Confirma exclusão?");
+
+    if (resposta == JOptionPane.YES_OPTION) {
+        try {
+            // recupera a linha selecionada
+            int linha = tabela.getSelectedRow();
+            int codigo
+                    = Integer.parseInt(modeloTabela.getValueAt(linha, 0).toString());
+            fatec_professor professor = new fatec_professor();
+            professor.setcodigo(codigo);
+            ProfessorController professorController = new ProfessorController();
+            professorController.remove(professor);
             JOptionPane.showMessageDialog(null, "Removeu");
             atualizaTabela();
+
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Não Removeu");
         }
-        else 
-        JOptionPane.showMessageDialog(null, "Não Removeu");
     }
 }//GEN-LAST:event_btnRemoveActionPerformed
 
@@ -182,10 +190,10 @@ private void btnAtualizaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
     AtualizaAluno atualizaAluno = new AtualizaAluno();
     // recupera linha selecionada
     int linha = tabela.getSelectedRow();
-    // recupera aluno selecionado do ArrayList
-    AlunoModel alunoSelecionado = alunos.get(linha); 
-    // atribui alunoSelecionado para objeto atualizaAluno
-    atualizaAluno.setAlunoSelecionado(alunoSelecionado);
+    // recupera professor selecionado do ArrayList
+    fatec_professor professorSelecionado = professors.get(linha);
+    // atribui professorSelecionado para objeto atualizaAluno
+    atualizaAluno.setAlunoSelecionado(professorSelecionado);
     atualizaAluno.alimentaFormulario();
     atualizaAluno.setVisible(true);
 }//GEN-LAST:event_btnAtualizaActionPerformed

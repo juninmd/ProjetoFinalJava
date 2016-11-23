@@ -1,36 +1,37 @@
-
 package br.fatecfranca.controller;
-import br.fatecfranca.model.AlunoModel;
-import br.fatecfranca.dao.AlunoDAO;
+
+import br.fatecfranca.dao.fatec_alunoDao;
 import java.util.List;
+import br.fatecfranca.model.fatec_aluno;
+
 public class AlunoController {
-    
-    public int insere(AlunoModel aluno){
+
+    public void insere(fatec_aluno aluno) throws Exception {
         // controller acessando model
-        AlunoDAO alunoDAOImpl = new AlunoDAO();
+        fatec_alunoDao alunoDAOImpl = new fatec_alunoDao();
         // model retorna dados para controller
-        return alunoDAOImpl.insere(aluno);
+        alunoDAOImpl.Add(aluno);
     }
-    
-    public List<AlunoModel> consulta(){
+
+    public List<fatec_aluno> consulta() throws Exception {
         // controller acessando model
-        AlunoDAO alunoDAOImpl = new AlunoDAO();
+        fatec_alunoDao alunoDAOImpl = new fatec_alunoDao();
         // model retorna dados para controller
-        return alunoDAOImpl.consulta();
+        return alunoDAOImpl.GetAll();
     }
-    
-     public int remove(AlunoModel aluno){
+
+    public void remove(fatec_aluno aluno) throws Exception {
         // controller acessando model
-        AlunoDAO alunoDAOImpl = new AlunoDAO();
+        fatec_alunoDao alunoDAOImpl = new fatec_alunoDao();
         // model retorna dados para controller
-        return alunoDAOImpl.remove(aluno);
+        alunoDAOImpl.Delete(aluno.getcodigo());
     }
-    
-    public int atualiza(AlunoModel aluno){
+
+    public void atualiza(fatec_aluno aluno) throws Exception {
         // controller acessando model
-        AlunoDAO alunoDAOImpl = new AlunoDAO();
+        fatec_alunoDao alunoDAOImpl = new fatec_alunoDao();
         // model retorna dados para controller
-        return alunoDAOImpl.atualiza(aluno);
+        alunoDAOImpl.Update(aluno);
     }
-     
+
 }
