@@ -1,123 +1,132 @@
 package br.fatecfranca.model;
 
+
 public class fatec_professor {
+	private int codigo;
+	private String cidade;
+	private String cpf;
+	private String documentos;
+	private String endereco;
+	private String estado;
+	private String nome;
+	private String rg;
+	private String sexo;
 
-    private Integer codigo;
-    private String cidade;
-    private String cpf;
-    private String documentos;
-    private String endereco;
-    private String estado;
-    private String nome;
-    private String rg;
-    private String sexo;
+	/** 
+	 * 
+	 * @return 
+	 * @Descrição  
+	 */
+	public int getCodigo() {
+		return codigo;
+	}
 
-    /**
-     *
-     * @return @Descrição
-     */
-    public Integer getcodigo() {
-        return codigo;
-    }
+	public void setCodigo(int codigo) {
+		this.codigo = codigo;
+	}
 
-    public void setcodigo(Integer codigo) {
-        this.codigo = codigo;
-    }
+	/** 
+	 * 
+	 * @return 
+	 * @Descrição  
+	 */
+	public String getCidade() {
+		return cidade;
+	}
 
-    /**
-     *
-     * @return @Descrição
-     */
-    public String getcidade() {
-        return cidade;
-    }
+	public void setCidade(String cidade) {
+		this.cidade = cidade;
+	}
 
-    public void setcidade(String cidade) {
-        this.cidade = cidade;
-    }
+	/** 
+	 * 
+	 * @return 
+	 * @Descrição  
+	 */
+	public String getCpf() {
+		return cpf;
+	}
 
-    /**
-     *
-     * @return @Descrição
-     */
-    public String getcpf() {
-        return cpf;
-    }
+	public void setCpf(String cpf) {
+		this.cpf = cpf;
+	}
 
-    public void setcpf(String cpf) {
-        this.cpf = cpf;
-    }
+	/** 
+	 * 
+	 * @return 
+	 * @Descrição  
+	 */
+	public String getDocumentos() {
+		return documentos;
+	}
 
-    /**
-     *
-     * @return @Descrição
-     */
-    public String getdocumentos() {
-        return documentos;
-    }
+	public void setDocumentos(String documentos) {
+		this.documentos = documentos;
+	}
 
-    public void setdocumentos(String documentos) {
-        this.documentos = documentos;
-    }
+	/** 
+	 * 
+	 * @return 
+	 * @Descrição  
+	 */
+	public String getEndereco() {
+		return endereco;
+	}
 
-    /**
-     *
-     * @return @Descrição
-     */
-    public String getendereco() {
-        return endereco;
-    }
+	public void setEndereco(String endereco) {
+		this.endereco = endereco;
+	}
 
-    public void setendereco(String endereco) {
-        this.endereco = endereco;
-    }
+	/** 
+	 * 
+	 * @return 
+	 * @Descrição  
+	 */
+	public String getEstado() {
+		return estado;
+	}
 
-    /**
-     *
-     * @return @Descrição
-     */
-    public String getestado() {
-        return estado;
-    }
+	public void setEstado(String estado) {
+		this.estado = estado;
+	}
 
-    public void setestado(String estado) {
-        this.estado = estado;
-    }
+	/** 
+	 * 
+	 * @return 
+	 * @Descrição  
+	 */
+	public String getNome() {
+		return nome;
+	}
 
-    /**
-     *
-     * @return @Descrição
-     */
-    public String getnome() {
-        return nome;
-    }
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
 
-    public void setnome(String nome) {
-        this.nome = nome;
-    }
+	/** 
+	 * 
+	 * @return 
+	 * @Descrição  
+	 */
+	public String getRg() {
+		return rg;
+	}
 
-    /**
-     *
-     * @return @Descrição
-     */
-    public String getrg() {
-        return rg;
-    }
+	public void setRg(String rg) {
+		this.rg = rg;
+	}
 
-    public void setrg(String rg) {
-        this.rg = rg;
-    }
+	/** 
+	 * 
+	 * @return 
+	 * @Descrição  
+	 */
+	public String getSexo() {
+		return sexo;
+	}
 
-    /**
-     *
-     * @return @Descrição
-     */
-    public String getsexo() {
-        return sexo;
-    }
-
-    public void setsexo(String sexo) {
-        this.sexo = sexo;
-    }
+	public void setSexo(String sexo) {
+		this.sexo = sexo;
+	}
 
 }

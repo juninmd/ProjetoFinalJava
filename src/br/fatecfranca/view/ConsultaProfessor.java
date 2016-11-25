@@ -39,7 +39,7 @@ public class ConsultaProfessor extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 0, 255));
-        jLabel1.setText("Consulta Alunos");
+        jLabel1.setText("Consulta Professor");
 
         tabela.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -133,15 +133,15 @@ public class ConsultaProfessor extends javax.swing.JFrame {
         } else {
             Object objetos[] = new Object[9];
             for (fatec_professor professor : professors) { // para cada professor
-                objetos[0] = professor.getcodigo();
-                objetos[1] = professor.getnome();
-                objetos[2] = professor.getendereco();
-                objetos[3] = professor.getcidade();
-                objetos[4] = professor.getestado();
-                objetos[5] = professor.getcpf();
-                objetos[6] = professor.getrg();
-                objetos[7] = professor.getsexo();
-                objetos[8] = professor.getdocumentos();
+                objetos[0] = professor.getCodigo();
+                objetos[1] = professor.getNome();
+                objetos[2] = professor.getEndereco();
+                objetos[3] = professor.getCidade();
+                objetos[4] = professor.getEstado();
+                objetos[5] = professor.getCpf();
+                objetos[6] = professor.getRg();
+                objetos[7] = professor.getSexo();
+                objetos[8] = professor.getDocumentos();
                 modeloTabela.addRow(objetos);
             }
         }
@@ -173,7 +173,7 @@ private void btnRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIR
             int codigo
                     = Integer.parseInt(modeloTabela.getValueAt(linha, 0).toString());
             fatec_professor professor = new fatec_professor();
-            professor.setcodigo(codigo);
+            professor.setCodigo(codigo);
             ProfessorController professorController = new ProfessorController();
             professorController.remove(professor);
             JOptionPane.showMessageDialog(null, "Removeu");
@@ -187,15 +187,7 @@ private void btnRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIR
 
 private void btnAtualizaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtualizaActionPerformed
 // TODO add your handling code here:
-    AtualizaAluno atualizaAluno = new AtualizaAluno();
-    // recupera linha selecionada
-    int linha = tabela.getSelectedRow();
-    // recupera professor selecionado do ArrayList
-    fatec_professor professorSelecionado = professors.get(linha);
-    // atribui professorSelecionado para objeto atualizaAluno
-    atualizaAluno.setAlunoSelecionado(professorSelecionado);
-    atualizaAluno.alimentaFormulario();
-    atualizaAluno.setVisible(true);
+    
 }//GEN-LAST:event_btnAtualizaActionPerformed
 
     /**

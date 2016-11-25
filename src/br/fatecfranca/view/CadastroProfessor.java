@@ -201,8 +201,8 @@ private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
         // cria um objeto da classe Professor
         fatec_professor professor = new fatec_professor();
         // atribui os valores do usuário
-        professor.setcidade(cidade.getText());
-        professor.setcpf(cpf.getText());
+        professor.setCidade(cidade.getText());
+        professor.setCpf(cpf.getText());
         String doc = "";
         if (em.isSelected()) {
             doc = doc + " ensino médio";
@@ -213,18 +213,18 @@ private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
         if (contrato.isSelected()) {
             doc = doc + " contrato";
         }
-        professor.setdocumentos(doc);
-        professor.setendereco(endereco.getText());
-        professor.setestado(estado.getSelectedItem().toString());
-        professor.setnome(nome.getText());
-        professor.setrg(rg.getText());
+        professor.setDocumentos(doc);
+        professor.setEndereco(endereco.getText());
+        professor.setEstado(estado.getSelectedItem().toString());
+        professor.setNome(nome.getText());
+        professor.setRg(rg.getText());
         String sexo = "";
         if (masculino.isSelected()) {
             sexo = "masculino";
         } else {
             sexo = "feminino";
         }
-        professor.setsexo(sexo);
+        professor.setSexo(sexo);
 
         // view acessa o controller e recebe o resultado
         ProfessorController professorController = new ProfessorController();

@@ -24,7 +24,7 @@ public class AlunoController {
         // controller acessando model
         fatec_alunoDao alunoDAOImpl = new fatec_alunoDao();
         // model retorna dados para controller
-        alunoDAOImpl.Delete(aluno.getcodigo());
+        alunoDAOImpl.Delete(aluno.getCodigo());
     }
 
     public void atualiza(fatec_aluno aluno) throws Exception {

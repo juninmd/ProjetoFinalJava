@@ -3,30 +3,21 @@ package br.fatecfranca.dao;
 import java.sql.ResultSet;
 import java.util.List;
 import br.fatecfranca.model.fatec_matricula;
+import java.sql.Date;
+import java.sql.PreparedStatement;
 
 public class fatec_matriculaDao extends ComumDao {
 
-    private enum Proc {
-        FATEC_SP_S_FATEC_MATRICULA_ID,
-        FATEC_SP_S_FATEC_MATRICULA,
-        FATEC_SP_I_FATEC_MATRICULA,
-        FATEC_SP_U_FATEC_MATRICULA,
-        FATEC_SP_D_FATEC_MATRICULA
-    }
-
-    public fatec_matricula GetById(int id) throws Exception {
+    public fatec_matricula GetById(int ID) throws Exception {
         try {
-            BeginNewStatement(Proc.FATEC_SP_S_FATEC_MATRICULA_ID, "academico");
-            AddParamter(new Paramter("P_codigo", java.sql.Types.NUMERIC, id));
-
-            ResultSet rs = super.ExecuteReader();
-
+            PreparedStatement conn = BeginNewStatement("SELECT * FROM fatec_matricula WHERE codigo = ID");
+            ResultSet rs = conn.executeQuery();
             if (rs.next()) {
                 fatec_matricula resposta = new fatec_matricula();
-                resposta.setcodigo(rs.getInt("codigo"));
-                resposta.setcodigoaluno(rs.getInt("codigoaluno"));
-                resposta.setcodigocurso(rs.getInt("codigocurso"));
-                resposta.setmatricula(rs.getDate("matricula"));
+                resposta.setCodigo(rs.getInt("codigo"));
+                resposta.setCodigoaluno(rs.getInt("codigoaluno"));
+                resposta.setCodigocurso(rs.getInt("codigocurso"));
+                resposta.setMatricula(rs.getDate("matricula"));
                 return resposta;
             };
             return null;
@@ -41,15 +32,14 @@ public class fatec_matriculaDao extends ComumDao {
         try {
             List<fatec_matricula> lista = new java.util.ArrayList<fatec_matricula>();
 
-            BeginNewStatement(Proc.FATEC_SP_S_FATEC_MATRICULA, "academico");
-            ResultSet rs = super.ExecuteReader();
-
+            PreparedStatement conn = BeginNewStatement("SELECT * FROM fatec_matricula");
+            ResultSet rs = conn.executeQuery();
             while (rs.next()) {
                 fatec_matricula resposta = new fatec_matricula();
-                resposta.setcodigo(rs.getInt("codigo"));
-                resposta.setcodigoaluno(rs.getInt("codigoaluno"));
-                resposta.setcodigocurso(rs.getInt("codigocurso"));
-                resposta.setmatricula(rs.getDate("matricula"));
+                resposta.setCodigo(rs.getInt("codigo"));
+                resposta.setCodigoaluno(rs.getInt("codigoaluno"));
+                resposta.setCodigocurso(rs.getInt("codigocurso"));
+                resposta.setMatricula(rs.getDate("matricula"));
                 lista.add(resposta);
             };
             return lista;
@@ -62,13 +52,13 @@ public class fatec_matriculaDao extends ComumDao {
 
     public void Add(fatec_matricula entidade) throws Exception {
         try {
-            BeginNewStatement(Proc.FATEC_SP_I_FATEC_MATRICULA, "academico");
-            AddParamter(new Paramter("P_RESULT", java.sql.Types.VARCHAR, null, "OUT"));
-
-            AddParamter(new Paramter("P_codigoaluno", java.sql.Types.INTEGER, entidade.getcodigoaluno()));
-            AddParamter(new Paramter("P_codigocurso", java.sql.Types.INTEGER, entidade.getcodigocurso()));
-            AddParamter(new Paramter("P_matricula", java.sql.Types.DATE, entidade.getmatricula()));
-            RequestProc();
+            PreparedStatement conn = BeginNewStatement("INSERT INTO fatec_matricula (codigo, codigoaluno, codigocurso, matricula) values (?, ?, ?, ?)");
+            conn.setInt(1, entidade.getCodigo());
+            conn.setInt(2, entidade.getCodigoaluno());
+            conn.setInt(3, entidade.getCodigocurso());
+            conn.setDate(4, (Date) entidade.getMatricula());
+            conn.execute();
+            commit();
         } catch (Exception ex) {
             throw ex;
         } finally {
@@ -78,14 +68,13 @@ public class fatec_matriculaDao extends ComumDao {
 
     public void Update(fatec_matricula entidade) throws Exception {
         try {
-            BeginNewStatement(Proc.FATEC_SP_U_FATEC_MATRICULA, "academico");
-            AddParamter(new Paramter("P_RESULT", java.sql.Types.VARCHAR, null, "OUT"));
-
-            AddParamter(new Paramter("P_codigo", java.sql.Types.INTEGER, entidade.getcodigo()));
-            AddParamter(new Paramter("P_codigoaluno", java.sql.Types.INTEGER, entidade.getcodigoaluno()));
-            AddParamter(new Paramter("P_codigocurso", java.sql.Types.INTEGER, entidade.getcodigocurso()));
-            AddParamter(new Paramter("P_matricula", java.sql.Types.DATE, entidade.getmatricula()));
-            RequestProc();
+            PreparedStatement conn = BeginNewStatement("UPDATE fatec_matricula SET codigo = ?, codigoaluno = ?, codigocurso = ?, matricula = ? WHERE codigo = " + entidade.getCodigo());
+            conn.setInt(1, entidade.getCodigo());
+            conn.setInt(2, entidade.getCodigoaluno());
+            conn.setInt(3, entidade.getCodigocurso());
+            conn.setDate(4, (Date) entidade.getMatricula());
+            conn.execute();
+            commit();
         } catch (Exception ex) {
             throw ex;
         } finally {
@@ -95,10 +84,10 @@ public class fatec_matriculaDao extends ComumDao {
 
     public void Delete(int ID) throws Exception {
         try {
-            BeginNewStatement(Proc.FATEC_SP_U_FATEC_MATRICULA, "academico");
-            AddParamter(new Paramter("P_RESULT", java.sql.Types.VARCHAR, null, "OUT"));
-
-            RequestProc();
+            PreparedStatement conn = BeginNewStatement("DELETE FROM fatec_matricula WHERE codigo = ?");
+            conn.setInt(1, ID);
+            conn.execute();
+            commit();
         } catch (Exception ex) {
             throw ex;
         } finally {

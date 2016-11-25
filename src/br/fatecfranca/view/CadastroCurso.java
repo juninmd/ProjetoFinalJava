@@ -2,49 +2,21 @@ package br.fatecfranca.view;
 
 import br.fatecfranca.controller.AlunoController;
 import br.fatecfranca.model.fatec_aluno;
-import br.fatecfranca.model.fatec_professor;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
-public class AtualizaAluno extends javax.swing.JFrame {
-
-    private fatec_aluno alunoSelecionado;
+/**
+ *
+ * @author aluno
+ */
+public class CadastroCurso extends javax.swing.JFrame {
 
     /**
      * Creates new form CadastroAluno
      */
-    public AtualizaAluno() {
+    public CadastroCurso() {
         initComponents();
-    }
-
-    public void alimentaFormulario() {
-        nome.setText(alunoSelecionado.getnome());
-        endereco.setText(alunoSelecionado.getendereco());
-        cidade.setText(alunoSelecionado.getcidade());
-        rg.setText(alunoSelecionado.getrg());
-        cpf.setText(alunoSelecionado.getcpf());
-        estado.setSelectedItem(alunoSelecionado.getestado());
-        // sexo
-        if (alunoSelecionado.getsexo().equals("masculino")) {
-            masculino.setSelected(true);
-        } else {
-            feminino.setSelected(true);
-        }
-        // documentos
-        if (alunoSelecionado.getdocumentos().contains("ensino médio")) {
-            em.setSelected(true);
-        }
-        if (alunoSelecionado.getdocumentos().contains("militar")) {
-            militar.setSelected(true);
-        }
-        if (alunoSelecionado.getdocumentos().contains("contrato")) {
-            contrato.setSelected(true);
-        }
-    }
-
-    public void setAlunoSelecionado(fatec_aluno alunoSelecionado) {
-        this.alunoSelecionado = alunoSelecionado;
     }
 
     @SuppressWarnings("unchecked")
@@ -89,7 +61,7 @@ public class AtualizaAluno extends javax.swing.JFrame {
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(0, 51, 255));
-        jLabel5.setText("Tela de Atualização de Alunos");
+        jLabel5.setText("Tela de Cadastro de Curso");
 
         jLabel6.setText("Sexo");
 
@@ -117,7 +89,9 @@ public class AtualizaAluno extends javax.swing.JFrame {
 
         contrato.setText("Contrato");
 
-        jButton1.setText("Atualizar");
+        jButton1.setBackground(new java.awt.Color(255, 0, 51));
+        jButton1.setForeground(new java.awt.Color(255, 0, 102));
+        jButton1.setText("Cadastrar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -165,11 +139,11 @@ public class AtualizaAluno extends javax.swing.JFrame {
                 .addComponent(jButton2)
                 .addGap(87, 87, 87)
                 .addComponent(jButton1)
-                .addGap(164, 164, 164))
+                .addGap(158, 158, 158))
             .addGroup(layout.createSequentialGroup()
                 .addGap(124, 124, 124)
                 .addComponent(jLabel5)
-                .addContainerGap(145, Short.MAX_VALUE))
+                .addContainerGap(172, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -222,45 +196,43 @@ public class AtualizaAluno extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
 private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-    try {
-        // TODO add your handling code here:
-        // cria um objeto da classe Aluno
-        fatec_aluno aluno = new fatec_aluno();
-        // atribui os valores do usuário
-        aluno.setcodigo(alunoSelecionado.getcodigo());
-        aluno.setcidade(cidade.getText());
-        aluno.setcpf(cpf.getText());
-        String doc = "";
-        if (em.isSelected()) {
-            doc = doc + " ensino médio";
-        }
-        if (militar.isSelected()) {
-            doc = doc + " militar";
-        }
-        if (contrato.isSelected()) {
-            doc = doc + " contrato";
-        }
-        aluno.setdocumentos(doc);
-        aluno.setendereco(endereco.getText());
-        aluno.setestado(estado.getSelectedItem().toString());
-        aluno.setnome(nome.getText());
-        aluno.setrg(rg.getText());
-        String sexo = "";
-        if (masculino.isSelected()) {
-            sexo = "masculino";
-        } else {
-            sexo = "feminino";
-        }
-        aluno.setsexo(sexo);
-
-        // view acessa o controller e recebe o resultado
-        AlunoController alunoController = new AlunoController();
-        alunoController.atualiza(aluno);
-        JOptionPane.showMessageDialog(null, "Atualização com sucesso");
-    } catch (Exception ex) {
-        JOptionPane.showMessageDialog(null, "Problema com atualização");
+// TODO add your handling code here:
+    // cria um objeto da classe Aluno
+    fatec_aluno aluno = new fatec_aluno();
+    // atribui os valores do usuário
+    aluno.setCidade(cidade.getText());
+    aluno.setCpf(cpf.getText());
+    String doc = "";
+    if (em.isSelected()) {
+        doc = doc + " ensino médio";
     }
+    if (militar.isSelected()) {
+        doc = doc + " militar";
+    }
+    if (contrato.isSelected()) {
+        doc = doc + " contrato";
+    }
+    aluno.setDocumentos(doc);
+    aluno.setEndereco(endereco.getText());
+    aluno.setEstado(estado.getSelectedItem().toString());
+    aluno.setNome(nome.getText());
+    aluno.setRg(rg.getText());
+    String sexo = "";
+    if (masculino.isSelected()) {
+        sexo = "masculino";
+    } else {
+        sexo = "feminino";
+    }
+    aluno.setSexo(sexo);
 
+    // view acessa o controller e recebe o resultado
+    AlunoController alunoController = new AlunoController();
+    try {
+        alunoController.insere(aluno);
+        JOptionPane.showMessageDialog(null, "Inserção com sucesso");
+    } catch (Exception ex) {
+        JOptionPane.showMessageDialog(null, "Erro ao inserir aluno");
+    }
 }//GEN-LAST:event_jButton1ActionPerformed
 
     public static void main(String args[]) {
@@ -274,32 +246,25 @@ private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
-
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(AtualizaAluno.class
-                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
-
+            java.util.logging.Logger.getLogger(CadastroCurso.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(AtualizaAluno.class
-                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
-
+            java.util.logging.Logger.getLogger(CadastroCurso.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(AtualizaAluno.class
-                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
-
+            java.util.logging.Logger.getLogger(CadastroCurso.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(AtualizaAluno.class
-                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CadastroCurso.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
 
             public void run() {
-                new AtualizaAluno().setVisible(true);
+                new CadastroCurso().setVisible(true);
             }
         });
     }
@@ -328,9 +293,4 @@ private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
     private javax.swing.JTextField nome;
     private javax.swing.JFormattedTextField rg;
     // End of variables declaration//GEN-END:variables
-
-    void setAlunoSelecionado(fatec_professor professorSelecionado) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
 }

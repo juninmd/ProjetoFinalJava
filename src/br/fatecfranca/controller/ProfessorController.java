@@ -24,7 +24,7 @@ public class ProfessorController {
         // controller acessando model
         fatec_professorDao professorDao = new fatec_professorDao();
         // model retorna dados para controller
-        professorDao.Delete(professor.getcodigo());
+        professorDao.Delete(professor.getCodigo());
     }
 
     public void atualiza(fatec_professor professor) throws Exception {

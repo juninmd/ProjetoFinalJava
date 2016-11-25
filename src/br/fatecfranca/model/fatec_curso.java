@@ -1,32 +1,34 @@
 package br.fatecfranca.model;
 
+
 public class fatec_curso {
+	private int codigo;
+	private String nome;
 
-    private Integer codigo;
-    private String nome;
+	/** 
+	 * 
+	 * @return 
+	 * @Descrição  
+	 */
+	public int getCodigo() {
+		return codigo;
+	}
 
-    /**
-     *
-     * @return @Descrição
-     */
-    public Integer getcodigo() {
-        return codigo;
-    }
+	public void setCodigo(int codigo) {
+		this.codigo = codigo;
+	}
 
-    public void setcodigo(Integer codigo) {
-        this.codigo = codigo;
-    }
+	/** 
+	 * 
+	 * @return 
+	 * @Descrição  
+	 */
+	public String getNome() {
+		return nome;
+	}
 
-    /**
-     *
-     * @return @Descrição
-     */
-    public String getnome() {
-        return nome;
-    }
-
-    public void setnome(String nome) {
-        this.nome = nome;
-    }
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
 
 }
