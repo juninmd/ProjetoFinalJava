@@ -1,14 +1,21 @@
 package br.fatecfranca.controller;
 
 import br.fatecfranca.dao.fatec_disciplinaDao;
+import br.fatecfranca.dao.fatec_disciplina_professorDao;
 import java.util.List;
 import br.fatecfranca.model.fatec_disciplina;
+import br.fatecfranca.model.fatec_disciplina_professor;
 
 public class DisciplinaController {
 
-    public void Add(fatec_disciplina disciplina) throws Exception {
-        fatec_disciplinaDao disciplinaDAOImpl = new fatec_disciplinaDao();
-        disciplinaDAOImpl.Add(disciplina);
+    public void Add(fatec_disciplina disciplina, int IdProfessor) throws Exception {
+        int idDisciplina = new fatec_disciplinaDao().Add(disciplina);
+        new fatec_disciplina_professorDao().Add(new fatec_disciplina_professor() {
+            {
+                setIddisciplina(idDisciplina);
+                setIdprofessor(IdProfessor);
+            }
+        });
     }
 
     public List<fatec_disciplina> GetAll() throws Exception {

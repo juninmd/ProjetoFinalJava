@@ -46,7 +46,7 @@ public class CadastroMatricula extends javax.swing.JFrame {
         jLabel5.setForeground(new java.awt.Color(0, 51, 255));
         jLabel5.setText("Tela de Cadastro de Matricula");
 
-        jButton1.setBackground(new java.awt.Color(255, 0, 51));
+        jButton1.setBackground(new java.awt.Color(255, 255, 255));
         jButton1.setForeground(new java.awt.Color(255, 0, 102));
         jButton1.setText("Cadastrar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -56,6 +56,11 @@ public class CadastroMatricula extends javax.swing.JFrame {
         });
 
         jButton2.setText("Cancelar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         ddlCurso.setModel(new javax.swing.DefaultComboBoxModel(new String[] { " " }));
 
@@ -118,10 +123,15 @@ private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
     try {
         matriculaController.Add(matricula);
         JOptionPane.showMessageDialog(null, "Inserção com sucesso");
+        this.hide();
     } catch (Exception ex) {
         JOptionPane.showMessageDialog(null, "Erro ao inserir aluno");
     }
 }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        this.hide();              // TODO add your handling code here:
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */

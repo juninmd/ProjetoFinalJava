@@ -1,7 +1,14 @@
 package br.fatecfranca.view;
 
 import br.fatecfranca.controller.CursoController;
+import br.fatecfranca.dao.fatec_disciplinaDao;
 import br.fatecfranca.model.fatec_curso;
+import br.fatecfranca.model.fatec_disciplina;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 
 /**
@@ -10,11 +17,25 @@ import javax.swing.JOptionPane;
  */
 public class CadastroCurso extends javax.swing.JFrame {
 
+    private List<fatec_disciplina> disciplinas;
+
     /**
      * Creates new form CadastroAluno
      */
-    public CadastroCurso() {
+    public CadastroCurso() throws Exception {
         initComponents();
+        disciplinas = new fatec_disciplinaDao().GetAll();
+
+        if (disciplinas.size() <= 0) {
+            JOptionPane.showMessageDialog(null, "Cadastre primeiro disciplinas!!");
+            this.hide();
+        } else {
+            DefaultListModel listModel = new DefaultListModel();
+            for (int i = 0; i < disciplinas.size(); i++) {
+                listModel.addElement(disciplinas.get(i).getCodigo() + " - " + disciplinas.get(i).getNome());
+            }
+            jList2.setModel(listModel);
+        }
     }
 
     @SuppressWarnings("unchecked")
@@ -27,6 +48,9 @@ public class CadastroCurso extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jList2 = new javax.swing.JList<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -36,7 +60,7 @@ public class CadastroCurso extends javax.swing.JFrame {
         jLabel5.setForeground(new java.awt.Color(0, 51, 255));
         jLabel5.setText("Tela de Cadastro de Curso");
 
-        jButton1.setBackground(new java.awt.Color(255, 0, 51));
+        jButton1.setBackground(new java.awt.Color(255, 255, 255));
         jButton1.setForeground(new java.awt.Color(255, 0, 102));
         jButton1.setText("Cadastrar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -46,27 +70,46 @@ public class CadastroCurso extends javax.swing.JFrame {
         });
 
         jButton2.setText("Cancelar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
+        jLabel2.setText("Materias");
+
+        jList2.setToolTipText("");
+        jScrollPane2.setViewportView(jList2);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(46, 46, 46)
-                .addComponent(jLabel1)
-                .addGap(67, 67, 67)
-                .addComponent(nome, javax.swing.GroupLayout.DEFAULT_SIZE, 263, Short.MAX_VALUE)
-                .addGap(102, 102, 102))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(104, Short.MAX_VALUE)
-                .addComponent(jButton2)
-                .addGap(87, 87, 87)
-                .addComponent(jButton1)
-                .addGap(158, 158, 158))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(22, 22, 22)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addGap(18, 18, 18)
+                                .addComponent(nome, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 50, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane2)))
+                .addContainerGap())
             .addGroup(layout.createSequentialGroup()
-                .addGap(124, 124, 124)
+                .addGap(18, 18, 18)
+                .addComponent(jButton2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton1)
+                .addGap(42, 42, 42))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(80, 80, 80)
                 .addComponent(jLabel5)
-                .addContainerGap(172, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -78,10 +121,14 @@ public class CadastroCurso extends javax.swing.JFrame {
                     .addComponent(jLabel1)
                     .addComponent(nome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jButton2)
+                    .addComponent(jButton1))
+                .addContainerGap())
         );
 
         pack();
@@ -93,16 +140,28 @@ private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
     fatec_curso curso = new fatec_curso();
     // atribui os valores do usuário
     curso.setNome(nome.getText());
-   
+
+    List<Integer> listaMaterias = new ArrayList<>();
+    int[] selectedIx = this.jList2.getSelectedIndices();
+
+    for (int i = 0; i < selectedIx.length; i++) {
+        listaMaterias.add(Integer.parseInt(jList2.getModel().getElementAt(i).split("-")[0].trim()));
+    }
+
     // view acessa o controller e recebe o resultado
     CursoController cursoController = new CursoController();
     try {
-        cursoController.Add(curso);
+        cursoController.Add(curso, listaMaterias);
         JOptionPane.showMessageDialog(null, "Inserção com sucesso");
+        this.hide();
     } catch (Exception ex) {
         JOptionPane.showMessageDialog(null, "Erro ao inserir curso");
     }
 }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        this.hide();              // TODO add your handling code here:
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -133,7 +192,11 @@ private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
         java.awt.EventQueue.invokeLater(new Runnable() {
 
             public void run() {
-                new CadastroCurso().setVisible(true);
+                try {
+                    new CadastroCurso().setVisible(true);
+                } catch (Exception ex) {
+                    Logger.getLogger(CadastroCurso.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }
@@ -142,7 +205,10 @@ private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JList<String> jList2;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextField nome;
     // End of variables declaration//GEN-END:variables
 }

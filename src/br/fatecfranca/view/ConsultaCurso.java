@@ -1,7 +1,7 @@
 package br.fatecfranca.view;
 
-import br.fatecfranca.controller.ProfessorController;
-import br.fatecfranca.model.fatec_professor;
+import br.fatecfranca.controller.CursoController;
+import br.fatecfranca.model.fatec_curso;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -11,17 +11,18 @@ import javax.swing.table.DefaultTableModel;
 public class ConsultaCurso extends javax.swing.JFrame {
 
     private DefaultTableModel modeloTabela;
-    private ArrayList<fatec_professor> professors;
+    private ArrayList<fatec_curso> cursos;
 
     /**
      * Creates new form ConsultaAluno
      */
-    public ConsultaCurso() {
+    public ConsultaCurso() throws Exception {
         initComponents();
         // recupera modelo da tabela
         modeloTabela = (DefaultTableModel) tabela.getModel();
         btnRemove.setEnabled(false);
         btnAtualiza.setEnabled(false);
+        atualizaTabela();
     }
 
     @SuppressWarnings("unchecked")
@@ -34,6 +35,7 @@ public class ConsultaCurso extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         btnAtualiza = new javax.swing.JButton();
         btnRemove = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -46,7 +48,7 @@ public class ConsultaCurso extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Código", "Nome", "Endereço", "Cidade", "Estado", "CPF", "RG", "Sexo", "Documentos"
+                "Código", "Nome"
             }
         ));
         tabela.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -77,6 +79,13 @@ public class ConsultaCurso extends javax.swing.JFrame {
             }
         });
 
+        jButton2.setText("Fechar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -88,15 +97,20 @@ public class ConsultaCurso extends javax.swing.JFrame {
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 824, Short.MAX_VALUE)
                         .addContainerGap())
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jButton1)
-                        .addGap(40, 40, 40)
-                        .addComponent(btnAtualiza)
-                        .addGap(43, 43, 43)
-                        .addComponent(btnRemove)
-                        .addGap(234, 234, 234))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(308, 308, 308))))
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(jButton2)
+                                .addGap(27, 27, 27)
+                                .addComponent(jButton1)
+                                .addGap(40, 40, 40)
+                                .addComponent(btnAtualiza)
+                                .addGap(43, 43, 43)
+                                .addComponent(btnRemove)
+                                .addGap(234, 234, 234))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addGap(308, 308, 308))))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -109,7 +123,8 @@ public class ConsultaCurso extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
                     .addComponent(btnAtualiza)
-                    .addComponent(btnRemove))
+                    .addComponent(btnRemove)
+                    .addComponent(jButton2))
                 .addContainerGap(28, Short.MAX_VALUE))
         );
 
@@ -119,28 +134,20 @@ public class ConsultaCurso extends javax.swing.JFrame {
     public void atualizaTabela() throws Exception {
         btnRemove.setEnabled(false);
         btnAtualiza.setEnabled(false);
-        ProfessorController professorController = new ProfessorController();
-        professors = (ArrayList) professorController.GetAll();
+        CursoController cursoController = new CursoController();
+        cursos = (ArrayList) cursoController.GetAll();
         // limpa a tabela
         modeloTabela.setRowCount(0);
         // alimenta tabela
-        if (professors == null) {
-            JOptionPane.showMessageDialog(null,
-                    "Problema na consulta");
-        } else if (professors.isEmpty()) {
-            JOptionPane.showMessageDialog(null,
-                    "Não foram encontrados professors");
+        if (cursos == null) {
+            JOptionPane.showMessageDialog(null, "Problema na consulta");
+        } else if (cursos.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Não foram encontrados cursos");
         } else {
             Object objetos[] = new Object[9];
-            for (fatec_professor professor : professors) { // para cada professor
-                objetos[0] = professor.getCodigo();
-                objetos[1] = professor.getNome();
-                objetos[2] = professor.getEndereco();
-                objetos[3] = professor.getCidade();
-                objetos[4] = professor.getEstado();
-                objetos[5] = professor.getCpf();
-                objetos[6] = professor.getRg();
-                objetos[7] = professor.getSexo();
+            for (fatec_curso curso : cursos) { // para cada curso
+                objetos[0] = curso.getCodigo();
+                objetos[1] = curso.getNome();
                 modeloTabela.addRow(objetos);
             }
         }
@@ -171,10 +178,10 @@ private void btnRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIR
             int linha = tabela.getSelectedRow();
             int codigo
                     = Integer.parseInt(modeloTabela.getValueAt(linha, 0).toString());
-            fatec_professor professor = new fatec_professor();
-            professor.setCodigo(codigo);
-            ProfessorController professorController = new ProfessorController();
-            professorController.Delete(professor);
+            fatec_curso curso = new fatec_curso();
+            curso.setCodigo(codigo);
+            CursoController cursoController = new CursoController();
+            cursoController.Delete(curso);
             JOptionPane.showMessageDialog(null, "Removeu");
             atualizaTabela();
 
@@ -186,8 +193,12 @@ private void btnRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIR
 
 private void btnAtualizaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtualizaActionPerformed
 // TODO add your handling code here:
-   
+
 }//GEN-LAST:event_btnAtualizaActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        this.hide();        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -227,7 +238,11 @@ private void btnAtualizaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
         java.awt.EventQueue.invokeLater(new Runnable() {
 
             public void run() {
-                new ConsultaCurso().setVisible(true);
+                try {
+                    new ConsultaCurso().setVisible(true);
+                } catch (Exception ex) {
+                    Logger.getLogger(ConsultaCurso.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }
@@ -235,6 +250,7 @@ private void btnAtualizaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
     private javax.swing.JButton btnAtualiza;
     private javax.swing.JButton btnRemove;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tabela;

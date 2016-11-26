@@ -16,12 +16,13 @@ public class ConsultaDisciplina extends javax.swing.JFrame {
     /**
      * Creates new form ConsultaAluno
      */
-    public ConsultaDisciplina() {
+    public ConsultaDisciplina() throws Exception {
         initComponents();
         // recupera modelo da tabela
         modeloTabela = (DefaultTableModel) tabela.getModel();
         btnRemove.setEnabled(false);
         btnAtualiza.setEnabled(false);
+        atualizaTabela();
     }
 
     @SuppressWarnings("unchecked")
@@ -34,6 +35,7 @@ public class ConsultaDisciplina extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         btnAtualiza = new javax.swing.JButton();
         btnRemove = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -85,6 +87,13 @@ public class ConsultaDisciplina extends javax.swing.JFrame {
             }
         });
 
+        jButton2.setText("Fechar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -96,15 +105,20 @@ public class ConsultaDisciplina extends javax.swing.JFrame {
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 824, Short.MAX_VALUE)
                         .addContainerGap())
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jButton1)
-                        .addGap(40, 40, 40)
-                        .addComponent(btnAtualiza)
-                        .addGap(43, 43, 43)
-                        .addComponent(btnRemove)
-                        .addGap(234, 234, 234))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(308, 308, 308))))
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(jButton2)
+                                .addGap(35, 35, 35)
+                                .addComponent(jButton1)
+                                .addGap(40, 40, 40)
+                                .addComponent(btnAtualiza)
+                                .addGap(43, 43, 43)
+                                .addComponent(btnRemove)
+                                .addGap(234, 234, 234))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addGap(308, 308, 308))))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -117,7 +131,8 @@ public class ConsultaDisciplina extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
                     .addComponent(btnAtualiza)
-                    .addComponent(btnRemove))
+                    .addComponent(btnRemove)
+                    .addComponent(jButton2))
                 .addContainerGap(28, Short.MAX_VALUE))
         );
 
@@ -137,7 +152,7 @@ public class ConsultaDisciplina extends javax.swing.JFrame {
                     "Problema na consulta");
         } else if (disciplinas.isEmpty()) {
             JOptionPane.showMessageDialog(null,
-                    "Não foram encontrados disciplinas");
+                    "Não foram encontradas disciplinas");
         } else {
             Object objetos[] = new Object[9];
             for (fatec_disciplina disciplina : disciplinas) { // para cada disciplina
@@ -190,6 +205,10 @@ private void btnAtualizaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
 
 }//GEN-LAST:event_btnAtualizaActionPerformed
 
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        this.hide();        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton2ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -224,7 +243,11 @@ private void btnAtualizaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
         java.awt.EventQueue.invokeLater(new Runnable() {
 
             public void run() {
-                new ConsultaDisciplina().setVisible(true);
+                try {
+                    new ConsultaDisciplina().setVisible(true);
+                } catch (Exception ex) {
+                    Logger.getLogger(ConsultaDisciplina.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }
@@ -232,6 +255,7 @@ private void btnAtualizaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
     private javax.swing.JButton btnAtualiza;
     private javax.swing.JButton btnRemove;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tabela;

@@ -77,7 +77,7 @@ public class CadastroProfessor extends javax.swing.JFrame {
             ex.printStackTrace();
         }
 
-        jButton1.setBackground(new java.awt.Color(255, 0, 51));
+        jButton1.setBackground(new java.awt.Color(255, 255, 255));
         jButton1.setForeground(new java.awt.Color(255, 0, 102));
         jButton1.setText("Cadastrar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -199,6 +199,7 @@ private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
         ProfessorController professorController = new ProfessorController();
         professorController.Add(professor);
         JOptionPane.showMessageDialog(null, "Inserção com sucesso");
+        this.hide();
     } catch (Exception ex) {
         JOptionPane.showMessageDialog(null, "Inserção com sucesso");
     }

@@ -62,7 +62,7 @@ public class ComumDao {
                 connection = DriverManager.getConnection("jdbc:mysql://localhost/academico", "root", "mysql");
                 connection.setAutoCommit(false);
             }
-            return this.connection.prepareStatement(query);
+            return this.connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
 
         } catch (Exception e) {
             throw new Exception("Ocorreu uma falha na execução da query " + query + " Erro: " + e.getMessage());
