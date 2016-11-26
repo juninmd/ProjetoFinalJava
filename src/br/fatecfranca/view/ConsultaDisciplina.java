@@ -1,7 +1,7 @@
 package br.fatecfranca.view;
 
-import br.fatecfranca.controller.ProfessorController;
-import br.fatecfranca.model.fatec_professor;
+import br.fatecfranca.controller.DisciplinaController;
+import br.fatecfranca.model.fatec_disciplina;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -11,7 +11,7 @@ import javax.swing.table.DefaultTableModel;
 public class ConsultaDisciplina extends javax.swing.JFrame {
 
     private DefaultTableModel modeloTabela;
-    private ArrayList<fatec_professor> professors;
+    private ArrayList<fatec_disciplina> disciplinas;
 
     /**
      * Creates new form ConsultaAluno
@@ -46,9 +46,17 @@ public class ConsultaDisciplina extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Código", "Nome", "Endereço", "Cidade", "Estado", "CPF", "RG", "Sexo", "Documentos"
+                "Código", "Nome"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                true, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         tabela.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tabelaMouseClicked(evt);
@@ -119,29 +127,22 @@ public class ConsultaDisciplina extends javax.swing.JFrame {
     public void atualizaTabela() throws Exception {
         btnRemove.setEnabled(false);
         btnAtualiza.setEnabled(false);
-        ProfessorController professorController = new ProfessorController();
-        professors = (ArrayList) professorController.consulta();
+        DisciplinaController disciplinaController = new DisciplinaController();
+        disciplinas = (ArrayList) disciplinaController.GetAll();
         // limpa a tabela
         modeloTabela.setRowCount(0);
         // alimenta tabela
-        if (professors == null) {
+        if (disciplinas == null) {
             JOptionPane.showMessageDialog(null,
                     "Problema na consulta");
-        } else if (professors.isEmpty()) {
+        } else if (disciplinas.isEmpty()) {
             JOptionPane.showMessageDialog(null,
-                    "Não foram encontrados professors");
+                    "Não foram encontrados disciplinas");
         } else {
             Object objetos[] = new Object[9];
-            for (fatec_professor professor : professors) { // para cada professor
-                objetos[0] = professor.getCodigo();
-                objetos[1] = professor.getNome();
-                objetos[2] = professor.getEndereco();
-                objetos[3] = professor.getCidade();
-                objetos[4] = professor.getEstado();
-                objetos[5] = professor.getCpf();
-                objetos[6] = professor.getRg();
-                objetos[7] = professor.getSexo();
-                objetos[8] = professor.getDocumentos();
+            for (fatec_disciplina disciplina : disciplinas) { // para cada disciplina
+                objetos[0] = disciplina.getCodigo();
+                objetos[1] = disciplina.getNome();
                 modeloTabela.addRow(objetos);
             }
         }
@@ -170,12 +171,11 @@ private void btnRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIR
         try {
             // recupera a linha selecionada
             int linha = tabela.getSelectedRow();
-            int codigo
-                    = Integer.parseInt(modeloTabela.getValueAt(linha, 0).toString());
-            fatec_professor professor = new fatec_professor();
-            professor.setCodigo(codigo);
-            ProfessorController professorController = new ProfessorController();
-            professorController.remove(professor);
+            int codigo = Integer.parseInt(modeloTabela.getValueAt(linha, 0).toString());
+            fatec_disciplina disciplina = new fatec_disciplina();
+            disciplina.setCodigo(codigo);
+            DisciplinaController disciplinaController = new DisciplinaController();
+            disciplinaController.Delete(disciplina);
             JOptionPane.showMessageDialog(null, "Removeu");
             atualizaTabela();
 
@@ -187,7 +187,7 @@ private void btnRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIR
 
 private void btnAtualizaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtualizaActionPerformed
 // TODO add your handling code here:
-   
+
 }//GEN-LAST:event_btnAtualizaActionPerformed
 
     /**

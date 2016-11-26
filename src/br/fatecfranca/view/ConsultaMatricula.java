@@ -1,7 +1,9 @@
 package br.fatecfranca.view;
 
+import br.fatecfranca.controller.MatriculaController;
 import br.fatecfranca.controller.ProfessorController;
-import br.fatecfranca.model.fatec_professor;
+import br.fatecfranca.model.fatec_matricula;
+import br.fatecfranca.model.fatec_matricula;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -11,7 +13,7 @@ import javax.swing.table.DefaultTableModel;
 public class ConsultaMatricula extends javax.swing.JFrame {
 
     private DefaultTableModel modeloTabela;
-    private ArrayList<fatec_professor> professors;
+    private ArrayList<fatec_matricula> matriculas;
 
     /**
      * Creates new form ConsultaAluno
@@ -46,7 +48,7 @@ public class ConsultaMatricula extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Código", "Nome", "Endereço", "Cidade", "Estado", "CPF", "RG", "Sexo", "Documentos"
+                "Código", "Nome"
             }
         ));
         tabela.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -119,29 +121,25 @@ public class ConsultaMatricula extends javax.swing.JFrame {
     public void atualizaTabela() throws Exception {
         btnRemove.setEnabled(false);
         btnAtualiza.setEnabled(false);
-        ProfessorController professorController = new ProfessorController();
-        professors = (ArrayList) professorController.consulta();
+        MatriculaController matriculaController = new MatriculaController();
+        matriculas = (ArrayList) matriculaController.GetAll();
         // limpa a tabela
         modeloTabela.setRowCount(0);
         // alimenta tabela
-        if (professors == null) {
+        if (matriculas == null) {
             JOptionPane.showMessageDialog(null,
                     "Problema na consulta");
-        } else if (professors.isEmpty()) {
+        } else if (matriculas.isEmpty()) {
             JOptionPane.showMessageDialog(null,
-                    "Não foram encontrados professors");
+                    "Não foram encontrados matriculas");
         } else {
             Object objetos[] = new Object[9];
-            for (fatec_professor professor : professors) { // para cada professor
-                objetos[0] = professor.getCodigo();
-                objetos[1] = professor.getNome();
-                objetos[2] = professor.getEndereco();
-                objetos[3] = professor.getCidade();
-                objetos[4] = professor.getEstado();
-                objetos[5] = professor.getCpf();
-                objetos[6] = professor.getRg();
-                objetos[7] = professor.getSexo();
-                objetos[8] = professor.getDocumentos();
+            for (fatec_matricula matricula : matriculas) { // para cada matricula
+                objetos[0] = matricula.getCodigo();
+                objetos[1] = matricula.getCodigoaluno();
+                objetos[2] = matricula.getCodigocurso();
+                objetos[3] = matricula.getMatricula();
+            
                 modeloTabela.addRow(objetos);
             }
         }
@@ -170,12 +168,11 @@ private void btnRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIR
         try {
             // recupera a linha selecionada
             int linha = tabela.getSelectedRow();
-            int codigo
-                    = Integer.parseInt(modeloTabela.getValueAt(linha, 0).toString());
-            fatec_professor professor = new fatec_professor();
-            professor.setCodigo(codigo);
-            ProfessorController professorController = new ProfessorController();
-            professorController.remove(professor);
+            int codigo = Integer.parseInt(modeloTabela.getValueAt(linha, 0).toString());
+            fatec_matricula matricula = new fatec_matricula();
+            matricula.setCodigo(codigo);
+            MatriculaController matriculaController = new MatriculaController();
+            matriculaController.Delete(matricula);
             JOptionPane.showMessageDialog(null, "Removeu");
             atualizaTabela();
 

@@ -6,32 +6,24 @@ import br.fatecfranca.model.fatec_professor;
 
 public class ProfessorController {
 
-    public void insere(fatec_professor professor) throws Exception {
-        // controller acessando model
-        fatec_professorDao professorDao = new fatec_professorDao();
-        // model retorna dados para controller
-        professorDao.Add(professor);
+    public void Add(fatec_professor professor) throws Exception {
+        fatec_professorDao professorDAOImpl = new fatec_professorDao();
+        professorDAOImpl.Add(professor);
     }
 
-    public List<fatec_professor> consulta() throws Exception {
-        // controller acessando model
-        fatec_professorDao professorDao = new fatec_professorDao();
-        // model retorna dados para controller
-        return professorDao.GetAll();
+    public List<fatec_professor> GetAll() throws Exception {
+        fatec_professorDao professorDAOImpl = new fatec_professorDao();
+        return professorDAOImpl.GetAll();
     }
 
-    public void remove(fatec_professor professor) throws Exception {
-        // controller acessando model
-        fatec_professorDao professorDao = new fatec_professorDao();
-        // model retorna dados para controller
-        professorDao.Delete(professor.getCodigo());
+    public void Delete(fatec_professor professor) throws Exception {
+        fatec_professorDao professorDAOImpl = new fatec_professorDao();
+        professorDAOImpl.Delete(professor.getCodigo());
     }
 
-    public void atualiza(fatec_professor professor) throws Exception {
-        // controller acessando model
-        fatec_professorDao professorDao = new fatec_professorDao();
-        // model retorna dados para controller
-        professorDao.Update(professor);
+    public void Update(fatec_professor professor) throws Exception {
+        fatec_professorDao professorDAOImpl = new fatec_professorDao();
+        professorDAOImpl.Update(professor);
     }
 
 }

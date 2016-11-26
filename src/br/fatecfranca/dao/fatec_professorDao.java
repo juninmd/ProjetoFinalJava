@@ -15,7 +15,6 @@ public class fatec_professorDao extends ComumDao {
 				resposta.setCodigo(rs.getInt("codigo"));
 				resposta.setCidade(rs.getString("cidade"));
 				resposta.setCpf(rs.getString("cpf"));
-				resposta.setDocumentos(rs.getString("documentos"));
 				resposta.setEndereco(rs.getString("endereco"));
 				resposta.setEstado(rs.getString("estado"));
 				resposta.setNome(rs.getString("nome"));
@@ -44,7 +43,6 @@ public class fatec_professorDao extends ComumDao {
 				resposta.setCodigo(rs.getInt("codigo"));
 				resposta.setCidade(rs.getString("cidade"));
 				resposta.setCpf(rs.getString("cpf"));
-				resposta.setDocumentos(rs.getString("documentos"));
 				resposta.setEndereco(rs.getString("endereco"));
 				resposta.setEstado(rs.getString("estado"));
 				resposta.setNome(rs.getString("nome"));
@@ -64,16 +62,15 @@ public class fatec_professorDao extends ComumDao {
 	public void Add(fatec_professor entidade) throws Exception
 	{
 		try{
-			PreparedStatement conn = BeginNewStatement("INSERT INTO fatec_professor (codigo, cidade, cpf, documentos, endereco, estado, nome, rg, sexo) values (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+			PreparedStatement conn = BeginNewStatement("INSERT INTO fatec_professor (codigo, cidade, cpf , endereco, estado, nome, rg, sexo) values (?, ?, ?, ?, ?, ?, ?, ?)");
 			conn.setInt(1, entidade.getCodigo());
 			conn.setString(2, entidade.getCidade());
 			conn.setString(3, entidade.getCpf());
-			conn.setString(4, entidade.getDocumentos());
-			conn.setString(5, entidade.getEndereco());
-			conn.setString(6, entidade.getEstado());
-			conn.setString(7, entidade.getNome());
-			conn.setString(8, entidade.getRg());
-			conn.setString(9, entidade.getSexo());
+			conn.setString(4, entidade.getEndereco());
+			conn.setString(5, entidade.getEstado());
+			conn.setString(6, entidade.getNome());
+			conn.setString(7, entidade.getRg());
+			conn.setString(8, entidade.getSexo());
 			conn.execute();
 			commit();
 		}
@@ -87,16 +84,15 @@ public class fatec_professorDao extends ComumDao {
 	public void Update(fatec_professor entidade) throws Exception
 	{
 		try{
-			PreparedStatement conn = BeginNewStatement("UPDATE fatec_professor SET codigo = ?, cidade = ?, cpf = ?, documentos = ?, endereco = ?, estado = ?, nome = ?, rg = ?, sexo = ? WHERE codigo = " +  entidade.getCodigo());
+			PreparedStatement conn = BeginNewStatement("UPDATE fatec_professor SET codigo = ?, cidade = ?, cpf = ?, endereco = ?, estado = ?, nome = ?, rg = ?, sexo = ? WHERE codigo = " +  entidade.getCodigo());
 			conn.setInt(1, entidade.getCodigo());
 			conn.setString(2, entidade.getCidade());
 			conn.setString(3, entidade.getCpf());
-			conn.setString(4, entidade.getDocumentos());
-			conn.setString(5, entidade.getEndereco());
-			conn.setString(6, entidade.getEstado());
-			conn.setString(7, entidade.getNome());
-			conn.setString(8, entidade.getRg());
-			conn.setString(9, entidade.getSexo());
+			conn.setString(4, entidade.getEndereco());
+			conn.setString(5, entidade.getEstado());
+			conn.setString(6, entidade.getNome());
+			conn.setString(7, entidade.getRg());
+			conn.setString(8, entidade.getSexo());
 			conn.execute();
 			commit();
 		}

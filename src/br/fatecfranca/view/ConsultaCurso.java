@@ -120,7 +120,7 @@ public class ConsultaCurso extends javax.swing.JFrame {
         btnRemove.setEnabled(false);
         btnAtualiza.setEnabled(false);
         ProfessorController professorController = new ProfessorController();
-        professors = (ArrayList) professorController.consulta();
+        professors = (ArrayList) professorController.GetAll();
         // limpa a tabela
         modeloTabela.setRowCount(0);
         // alimenta tabela
@@ -141,7 +141,6 @@ public class ConsultaCurso extends javax.swing.JFrame {
                 objetos[5] = professor.getCpf();
                 objetos[6] = professor.getRg();
                 objetos[7] = professor.getSexo();
-                objetos[8] = professor.getDocumentos();
                 modeloTabela.addRow(objetos);
             }
         }
@@ -175,7 +174,7 @@ private void btnRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIR
             fatec_professor professor = new fatec_professor();
             professor.setCodigo(codigo);
             ProfessorController professorController = new ProfessorController();
-            professorController.remove(professor);
+            professorController.Delete(professor);
             JOptionPane.showMessageDialog(null, "Removeu");
             atualizaTabela();
 

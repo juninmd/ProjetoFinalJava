@@ -57,7 +57,7 @@ public class CadastroAluno extends javax.swing.JFrame {
 
         estado.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "São Paulo", "Minas Gerais", "Rio de Janeiro", "Espírito Santo" }));
 
-        jLabel5.setFont(new java.awt.Font("Tahoma", 0, 18));
+        jLabel5.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(0, 51, 255));
         jLabel5.setText("Tela de Cadastro de Alunos");
 
@@ -97,6 +97,11 @@ public class CadastroAluno extends javax.swing.JFrame {
         });
 
         jButton2.setText("Cancelar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -226,12 +231,16 @@ private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
     // view acessa o controller e recebe o resultado
     AlunoController alunoController = new AlunoController();
     try {
-        alunoController.insere(aluno);
+        alunoController.Add(aluno);
         JOptionPane.showMessageDialog(null, "Inserção com sucesso");
     } catch (Exception ex) {
         JOptionPane.showMessageDialog(null, "Erro ao inserir aluno");
     }
 }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */

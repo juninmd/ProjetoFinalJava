@@ -5,7 +5,6 @@ public class fatec_professor {
 	private int codigo;
 	private String cidade;
 	private String cpf;
-	private String documentos;
 	private String endereco;
 	private String estado;
 	private String nome;
@@ -49,19 +48,6 @@ public class fatec_professor {
 
 	public void setCpf(String cpf) {
 		this.cpf = cpf;
-	}
-
-	/** 
-	 * 
-	 * @return 
-	 * @Descrição  
-	 */
-	public String getDocumentos() {
-		return documentos;
-	}
-
-	public void setDocumentos(String documentos) {
-		this.documentos = documentos;
 	}
 
 	/** 

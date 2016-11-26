@@ -120,7 +120,7 @@ public class ConsultaAluno extends javax.swing.JFrame {
         btnRemove.setEnabled(false);
         btnAtualiza.setEnabled(false);
         AlunoController alunoController = new AlunoController();
-        alunos = (ArrayList) alunoController.consulta();
+        alunos = (ArrayList) alunoController.GetAll();
         // limpa a tabela
         modeloTabela.setRowCount(0);
         // alimenta tabela
@@ -175,7 +175,7 @@ private void btnRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIR
             fatec_aluno aluno = new fatec_aluno();
             aluno.setCodigo(codigo);
             AlunoController alunoController = new AlunoController();
-            alunoController.remove(aluno);
+            alunoController.Delete(aluno);
             JOptionPane.showMessageDialog(null, "Removeu");
             atualizaTabela();
         } catch (Exception ex) {
