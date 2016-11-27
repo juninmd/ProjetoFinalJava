@@ -1,9 +1,12 @@
 package br.fatecfranca.view;
 
 import br.fatecfranca.controller.CursoController;
+import br.fatecfranca.dao.fatec_curso_disciplinaDao;
 import br.fatecfranca.dao.fatec_disciplinaDao;
 import br.fatecfranca.model.fatec_curso;
+import br.fatecfranca.model.fatec_curso_disciplina;
 import br.fatecfranca.model.fatec_disciplina;
+import br.fatecfranca.validate.ValidateCurso;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -18,6 +21,39 @@ import javax.swing.JOptionPane;
 public class CadastroCurso extends javax.swing.JFrame {
 
     private List<fatec_disciplina> disciplinas;
+    fatec_curso curso = new fatec_curso();
+
+    public void setCurso(fatec_curso curso) throws Exception {
+        this.curso = curso;
+        Alimenta();
+    }
+
+    private int retornaIndiceDisciplina(int idDisciplina) {
+        int retorno = 0;
+        for (int i = 0; i < jList2.getModel().getSize(); i++) {
+
+            int oi = Integer.parseInt(jList2.getModel().getElementAt(i).split("-")[0].trim());
+            if (oi == idDisciplina) {
+                return i;
+            }
+
+        }
+        return retorno;
+    }
+
+    private void Alimenta() throws Exception {
+        nome.setText(curso.getNome());
+        List<fatec_curso_disciplina> cursoDisciplina = new fatec_curso_disciplinaDao().GetAll(curso.getCodigo());
+
+        List<Integer> arrayDisciplinas = new ArrayList<Integer>();
+        for (int i = 0; i < cursoDisciplina.size(); i++) {
+            arrayDisciplinas.add(retornaIndiceDisciplina(cursoDisciplina.get(i).getIddisciplina()));
+        }
+        jList2.setSelectedIndices(arrayDisciplinas.stream().mapToInt(i -> i).toArray());
+
+        jButton1.setText("Atualizar");
+        jLabel5.setText("Atualizar Curso");
+    }
 
     /**
      * Creates new form CadastroAluno
@@ -137,12 +173,15 @@ public class CadastroCurso extends javax.swing.JFrame {
 private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 // TODO add your handling code here:
     // cria um objeto da classe Aluno
-    fatec_curso curso = new fatec_curso();
-    // atribui os valores do usuário
-    curso.setNome(nome.getText());
 
     List<Integer> listaMaterias = new ArrayList<>();
     int[] selectedIx = this.jList2.getSelectedIndices();
+
+    if (!new ValidateCurso().Validate(nome.getText(), selectedIx.length)) {
+        return;
+    }
+    // atribui os valores do usuário
+    curso.setNome(nome.getText());
 
     for (int i = 0; i < selectedIx.length; i++) {
         listaMaterias.add(Integer.parseInt(jList2.getModel().getElementAt(i).split("-")[0].trim()));
@@ -151,8 +190,14 @@ private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
     // view acessa o controller e recebe o resultado
     CursoController cursoController = new CursoController();
     try {
-        cursoController.Add(curso, listaMaterias);
-        JOptionPane.showMessageDialog(null, "Inserção com sucesso");
+        if (curso.getCodigo() == 0) {
+            cursoController.Add(curso, listaMaterias);
+            JOptionPane.showMessageDialog(null, "Inserção com sucesso");
+        } else {
+            cursoController.Update(curso, listaMaterias);
+            JOptionPane.showMessageDialog(null, "Atualização com sucesso");
+        }
+
         this.hide();
     } catch (Exception ex) {
         JOptionPane.showMessageDialog(null, "Erro ao inserir curso");

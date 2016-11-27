@@ -1,8 +1,7 @@
 package br.fatecfranca.view;
 
 import br.fatecfranca.controller.MatriculaController;
-import br.fatecfranca.controller.ProfessorController;
-import br.fatecfranca.model.fatec_matricula;
+import br.fatecfranca.dao.fatec_matriculaDao;
 import br.fatecfranca.model.fatec_matricula;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -50,7 +49,7 @@ public class ConsultaMatricula extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Código", "Nome"
+                "Código", "Id Aluno", "Nome Aluno", "Nome Curso"
             }
         ));
         tabela.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -151,10 +150,9 @@ public class ConsultaMatricula extends javax.swing.JFrame {
             Object objetos[] = new Object[9];
             for (fatec_matricula matricula : matriculas) { // para cada matricula
                 objetos[0] = matricula.getCodigo();
-                objetos[1] = matricula.getCodigoaluno();
-                objetos[2] = matricula.getCodigocurso();
-                objetos[3] = matricula.getMatricula();
-
+                objetos[1] = matricula.getIdaluno();
+                objetos[2] = matricula.getNome();
+                objetos[3] = matricula.getCurso();
                 modeloTabela.addRow(objetos);
             }
         }
@@ -199,7 +197,17 @@ private void btnRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIR
 
 private void btnAtualizaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtualizaActionPerformed
 // TODO add your handling code here:
+    try {
+        int linha = tabela.getSelectedRow();
+        int codigo = Integer.parseInt(modeloTabela.getValueAt(linha, 0).toString());
 
+        fatec_matricula matricula = new fatec_matriculaDao().GetById(codigo);
+        CadastroMatricula form = new CadastroMatricula();
+        form.setMatricula(matricula);
+        form.show();
+    } catch (Exception ex) {
+        Logger.getLogger(ConsultaAluno.class.getName()).log(Level.SEVERE, null, ex);
+    }
 }//GEN-LAST:event_btnAtualizaActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed

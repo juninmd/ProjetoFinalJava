@@ -2,6 +2,7 @@ package br.fatecfranca.view;
 
 import br.fatecfranca.controller.AlunoController;
 import br.fatecfranca.model.fatec_aluno;
+import br.fatecfranca.validate.ValidateAluno;
 import javax.swing.JOptionPane;
 
 /**
@@ -9,6 +10,41 @@ import javax.swing.JOptionPane;
  * @author aluno
  */
 public class CadastroAluno extends javax.swing.JFrame {
+
+    fatec_aluno aluno = new fatec_aluno();
+
+    public void setAlunoSelecionado(fatec_aluno alunoSelecionado) {
+        this.aluno = alunoSelecionado;
+        Alimenta();
+    }
+
+    private void Alimenta() {
+        nome.setText(aluno.getNome());
+        endereco.setText(aluno.getEndereco());
+        cidade.setText(aluno.getCidade());
+        rg.setText(aluno.getRg());
+        cpf.setText(aluno.getCpf());
+        estado.setSelectedItem(aluno.getEstado());
+        // sexo
+        if (aluno.getSexo().equals("masculino")) {
+            masculino.setSelected(true);
+        } else {
+            feminino.setSelected(true);
+        }
+        // documentos
+        if (aluno.getDocumentos().contains("ensino médio")) {
+            em.setSelected(true);
+        }
+        if (aluno.getDocumentos().contains("militar")) {
+            militar.setSelected(true);
+        }
+        if (aluno.getDocumentos().contains("contrato")) {
+            contrato.setSelected(true);
+        }
+
+        jButton1.setText("Atualizar");
+        jLabel5.setText("Atualizar Aluno");
+    }
 
     /**
      * Creates new form CadastroAluno
@@ -70,6 +106,14 @@ public class CadastroAluno extends javax.swing.JFrame {
         feminino.setText("Feminino");
 
         jLabel7.setText("RG");
+
+        try {
+            rg.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##.###.###-#")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        // Código que adiciona o componente ao contêiner pai - não mostrado aqui
+        rg.setText("  .   .   .   -");
 
         jLabel8.setText("CPF");
 
@@ -200,8 +244,11 @@ public class CadastroAluno extends javax.swing.JFrame {
 
 private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 // TODO add your handling code here:
-    // cria um objeto da classe Aluno
-    fatec_aluno aluno = new fatec_aluno();
+
+    if (!new ValidateAluno().Validate(nome.getText(), endereco.getText(), cidade.getText(), estado.getSelectedItem().toString(), (masculino.isSelected() || feminino.isSelected()),
+            cpf.getText(), rg.getText(), (em.isSelected() || militar.isSelected() || contrato.isSelected()))) {
+        return;
+    }
     // atribui os valores do usuário
     aluno.setCidade(cidade.getText());
     aluno.setCpf(cpf.getText());
@@ -231,8 +278,14 @@ private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
     // view acessa o controller e recebe o resultado
     AlunoController alunoController = new AlunoController();
     try {
-        alunoController.Add(aluno);
-        JOptionPane.showMessageDialog(null, "Inserção com sucesso");
+        if (aluno.getCodigo() == 0) {
+            alunoController.Add(aluno);
+            JOptionPane.showMessageDialog(null, "Inserção com sucesso");
+        } else {
+            alunoController.Update(aluno);
+            JOptionPane.showMessageDialog(null, "Atualização com sucesso");
+        }
+
         this.hide();
     } catch (Exception ex) {
         JOptionPane.showMessageDialog(null, "Erro ao inserir aluno");

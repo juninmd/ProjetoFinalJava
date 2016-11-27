@@ -1,6 +1,7 @@
 package br.fatecfranca.view;
 
 import br.fatecfranca.controller.ProfessorController;
+import br.fatecfranca.dao.fatec_professorDao;
 import br.fatecfranca.model.fatec_professor;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -184,8 +185,7 @@ private void btnRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIR
         try {
             // recupera a linha selecionada
             int linha = tabela.getSelectedRow();
-            int codigo
-                    = Integer.parseInt(modeloTabela.getValueAt(linha, 0).toString());
+            int codigo = Integer.parseInt(modeloTabela.getValueAt(linha, 0).toString());
             fatec_professor professor = new fatec_professor();
             professor.setCodigo(codigo);
             ProfessorController professorController = new ProfessorController();
@@ -201,7 +201,17 @@ private void btnRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIR
 
 private void btnAtualizaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtualizaActionPerformed
 // TODO add your handling code here:
+    try {
+        int linha = tabela.getSelectedRow();
+        int codigo = Integer.parseInt(modeloTabela.getValueAt(linha, 0).toString());
 
+        fatec_professor professor = new fatec_professorDao().GetById(codigo);
+        CadastroProfessor form = new CadastroProfessor();
+        form.setProfessor(professor);
+        form.show();
+    } catch (Exception ex) {
+        Logger.getLogger(ConsultaAluno.class.getName()).log(Level.SEVERE, null, ex);
+    }
 }//GEN-LAST:event_btnAtualizaActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed

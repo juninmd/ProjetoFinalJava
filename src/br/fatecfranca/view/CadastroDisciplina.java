@@ -3,14 +3,16 @@ package br.fatecfranca.view;
 import br.fatecfranca.controller.AlunoController;
 import br.fatecfranca.controller.DisciplinaController;
 import br.fatecfranca.dao.fatec_disciplinaDao;
+import br.fatecfranca.dao.fatec_disciplina_professorDao;
 import br.fatecfranca.dao.fatec_professorDao;
+import br.fatecfranca.model.fatec_curso;
 import br.fatecfranca.model.fatec_disciplina;
+import br.fatecfranca.model.fatec_disciplina_professor;
 import br.fatecfranca.model.fatec_professor;
+import br.fatecfranca.validate.ValidateDisciplina;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.ComboBoxModel;
-import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 
 /**
@@ -20,6 +22,38 @@ import javax.swing.JOptionPane;
 public class CadastroDisciplina extends javax.swing.JFrame {
 
     private List<fatec_professor> professores;
+    fatec_disciplina disciplina = new fatec_disciplina();
+
+    private int retornaIndiceProfessor(int idProfessor) {
+        int retorno = 0;
+        for (int i = 0; i < ddlProfessor.getModel().getSize(); i++) {
+
+            if (ddlProfessor.getModel().getElementAt(i).split("-")[0].trim().equals("")) {
+                continue;
+            }
+
+            int oi = Integer.parseInt(ddlProfessor.getModel().getElementAt(i).split("-")[0].trim());
+            if (oi == idProfessor) {
+                return i;
+            }
+        }
+        return retorno;
+    }
+
+    public void setDisciplina(fatec_disciplina disciplina) throws Exception {
+        this.disciplina = disciplina;
+        Alimenta();
+    }
+
+    private void Alimenta() throws Exception {
+        nome.setText(disciplina.getNome());
+
+        fatec_disciplina_professor idProfessor = new fatec_disciplina_professorDao().GetById(disciplina.getCodigo());
+        ddlProfessor.setSelectedIndex(retornaIndiceProfessor(idProfessor.getIdprofessor()));
+
+        jButton1.setText("Atualizar");
+        jLabel5.setText("Atualizar Curso");
+    }
 
     /**
      * Creates new form CadastroAluno
@@ -132,20 +166,23 @@ public class CadastroDisciplina extends javax.swing.JFrame {
 private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 // TODO add your handling code here:
     // cria um objeto da classe Aluno
-    fatec_disciplina disciplina = new fatec_disciplina();
-    // atribui os valores do usuário
-    disciplina.setNome(nome.getText());
-
-    if (ddlProfessor.getSelectedItem() == null || ddlProfessor.getSelectedItem().toString().trim().equals("")) {
-        JOptionPane.showMessageDialog(null, "Selecione um professor");
+    if (!new ValidateDisciplina().Validate(nome.getText(), ddlProfessor.getSelectedItem().toString().trim().equals(""))) {
         return;
     }
+    // atribui os valores do usuário
+    disciplina.setNome(nome.getText());
 
     // view acessa o controller e recebe o resultado
     DisciplinaController disciplinaController = new DisciplinaController();
     try {
-        disciplinaController.Add(disciplina, Integer.parseInt(ddlProfessor.getSelectedItem().toString().split("-")[0].trim()));
-        JOptionPane.showMessageDialog(null, "Inserção com sucesso");
+        if (disciplina.getCodigo() == 0) {
+            disciplinaController.Add(disciplina, Integer.parseInt(ddlProfessor.getSelectedItem().toString().split("-")[0].trim()));
+            JOptionPane.showMessageDialog(null, "Inserção com sucesso");
+        } else {
+            disciplinaController.Update(disciplina, Integer.parseInt(ddlProfessor.getSelectedItem().toString().split("-")[0].trim()));
+            JOptionPane.showMessageDialog(null, "Atualizado com sucesso");
+        }
+
         this.hide();
     } catch (Exception ex) {
         JOptionPane.showMessageDialog(null, "Erro ao inserir disciplina");

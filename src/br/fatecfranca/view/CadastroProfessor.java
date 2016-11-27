@@ -2,6 +2,7 @@ package br.fatecfranca.view;
 
 import br.fatecfranca.controller.ProfessorController;
 import br.fatecfranca.model.fatec_professor;
+import br.fatecfranca.validate.ValidateProfessor;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -11,6 +12,31 @@ import javax.swing.JOptionPane;
  * @author professor
  */
 public class CadastroProfessor extends javax.swing.JFrame {
+
+    fatec_professor professor = new fatec_professor();
+
+    public void setProfessor(fatec_professor professor) {
+        this.professor = professor;
+        Alimenta();
+    }
+
+    private void Alimenta() {
+        nome.setText(professor.getNome());
+        endereco.setText(professor.getEndereco());
+        cidade.setText(professor.getCidade());
+        rg.setText(professor.getRg());
+        cpf.setText(professor.getCpf());
+        estado.setSelectedItem(professor.getEstado());
+        // sexo
+        if (professor.getSexo().equals("masculino")) {
+            masculino.setSelected(true);
+        } else {
+            feminino.setSelected(true);
+        }
+
+        jButton1.setText("Atualizar");
+        jLabel5.setText("Atualizar Professor");
+    }
 
     /**
      * Creates new form CadastroProfessor
@@ -68,6 +94,13 @@ public class CadastroProfessor extends javax.swing.JFrame {
         feminino.setText("Feminino");
 
         jLabel7.setText("RG");
+
+        try {
+            rg.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##.###.###-#")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        rg.setText("  .   .   -");
 
         jLabel8.setText("CPF");
 
@@ -176,11 +209,12 @@ public class CadastroProfessor extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
 private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    
+    if(!new ValidateProfessor().Validate(nome.getText(),endereco.getText(),cidade.getText(),estado.getSelectedItem().toString().trim().equals(""),(masculino.isSelected() || feminino.isSelected()), cpf.getText(), rg.getText())){
+        return;
+    }
+    
     try {
-        // TODO add your handling code here:
-        // cria um objeto da classe Professor
-        fatec_professor professor = new fatec_professor();
-        // atribui os valores do usuário
         professor.setCidade(cidade.getText());
         professor.setCpf(cpf.getText());
         professor.setEndereco(endereco.getText());
@@ -197,8 +231,15 @@ private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
 
         // view acessa o controller e recebe o resultado
         ProfessorController professorController = new ProfessorController();
-        professorController.Add(professor);
-        JOptionPane.showMessageDialog(null, "Inserção com sucesso");
+
+        if (professor.getCodigo() == 0) {
+            professorController.Add(professor);
+            JOptionPane.showMessageDialog(null, "Inserção com sucesso");
+        } else {
+            professorController.Update(professor);
+            JOptionPane.showMessageDialog(null, "Atualizar com sucesso");
+        }
+
         this.hide();
     } catch (Exception ex) {
         JOptionPane.showMessageDialog(null, "Inserção com sucesso");

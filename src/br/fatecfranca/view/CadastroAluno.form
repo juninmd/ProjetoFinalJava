@@ -211,6 +211,12 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JFormattedTextField" name="rg">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="  .   .   .   -"/>
+      </Properties>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="try {&#xa;rg.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter(&quot;##.###.###-#&quot;)));&#xa;} catch (java.text.ParseException ex) {&#xa;ex.printStackTrace();&#xa;}&#xa;// C&#xf3;digo que adiciona o componente ao cont&#xea;iner pai - n&#xe3;o mostrado aqui"/>
+      </AuxValues>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel8">
       <Properties>

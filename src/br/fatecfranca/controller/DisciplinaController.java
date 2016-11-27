@@ -18,6 +18,16 @@ public class DisciplinaController {
         });
     }
 
+    public void Update(fatec_disciplina disciplina, int IdProfessor) throws Exception {
+        new fatec_disciplinaDao().Update(disciplina);
+        new fatec_disciplina_professorDao().Update(new fatec_disciplina_professor() {
+            {
+                setIddisciplina(disciplina.getCodigo());
+                setIdprofessor(IdProfessor);
+            }
+        });
+    }
+
     public List<fatec_disciplina> GetAll() throws Exception {
         fatec_disciplinaDao disciplinaDAOImpl = new fatec_disciplinaDao();
         return disciplinaDAOImpl.GetAll();

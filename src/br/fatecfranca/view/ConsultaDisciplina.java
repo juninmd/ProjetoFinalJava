@@ -1,6 +1,7 @@
 package br.fatecfranca.view;
 
 import br.fatecfranca.controller.DisciplinaController;
+import br.fatecfranca.dao.fatec_disciplinaDao;
 import br.fatecfranca.model.fatec_disciplina;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -202,7 +203,17 @@ private void btnRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIR
 
 private void btnAtualizaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtualizaActionPerformed
 // TODO add your handling code here:
+    try {
+        int linha = tabela.getSelectedRow();
+        int codigo = Integer.parseInt(modeloTabela.getValueAt(linha, 0).toString());
 
+        fatec_disciplina disciplina = new fatec_disciplinaDao().GetById(codigo);
+        CadastroDisciplina form = new CadastroDisciplina();
+        form.setDisciplina(disciplina);
+        form.show();
+    } catch (Exception ex) {
+        Logger.getLogger(ConsultaAluno.class.getName()).log(Level.SEVERE, null, ex);
+    }
 }//GEN-LAST:event_btnAtualizaActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed

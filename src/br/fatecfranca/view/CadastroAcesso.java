@@ -3,6 +3,7 @@ package br.fatecfranca.view;
 import br.fatecfranca.controller.AcessoController;
 import br.fatecfranca.controller.AlunoController;
 import br.fatecfranca.model.fatec_aluno;
+import br.fatecfranca.validate.ValidateAcesso;
 import javax.swing.JOptionPane;
 
 /**
@@ -33,7 +34,7 @@ public class CadastroAcesso extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jLabel1.setText("Usuário");
+        jLabel1.setText("CodigoRA");
 
         jLabel2.setText("Senha");
 
@@ -76,7 +77,7 @@ public class CadastroAcesso extends javax.swing.JFrame {
                         .addComponent(jButton2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButton1))
-                    .addComponent(usuario, javax.swing.GroupLayout.DEFAULT_SIZE, 272, Short.MAX_VALUE)
+                    .addComponent(usuario, javax.swing.GroupLayout.DEFAULT_SIZE, 261, Short.MAX_VALUE)
                     .addComponent(senha))
                 .addGap(102, 102, 102))
         );
@@ -106,6 +107,9 @@ public class CadastroAcesso extends javax.swing.JFrame {
 private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 // TODO add your handling code here:
 
+    if (!new ValidateAcesso().Validate(usuario.getText(), senha.getText())) {
+        return;
+    }
     // view acessa o controller e recebe o resultado
     AcessoController acessoController = new AcessoController();
     try {

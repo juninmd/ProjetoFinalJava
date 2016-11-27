@@ -25,11 +25,11 @@ public class fatec_curso_disciplinaDao extends ComumDao {
         }
     }
 
-    public List<fatec_curso_disciplina> GetAll() throws Exception {
+    public List<fatec_curso_disciplina> GetAll(int idCurso) throws Exception {
         try {
             List<fatec_curso_disciplina> lista = new java.util.ArrayList<fatec_curso_disciplina>();
 
-            PreparedStatement conn = BeginNewStatement("SELECT * FROM fatec_curso_disciplina");
+            PreparedStatement conn = BeginNewStatement("SELECT * FROM fatec_curso_disciplina where idCurso = " + idCurso);
             ResultSet rs = conn.executeQuery();
             while (rs.next()) {
                 fatec_curso_disciplina resposta = new fatec_curso_disciplina();
@@ -48,8 +48,8 @@ public class fatec_curso_disciplinaDao extends ComumDao {
     public void Add(fatec_curso_disciplina entidade) throws Exception {
         try {
             PreparedStatement conn = BeginNewStatement("INSERT INTO fatec_curso_disciplina (idCurso, idDisciplina) values (?,?)");
-            conn.setInt(1, entidade.getIddisciplina());
-            conn.setInt(2, entidade.getIdcurso());
+            conn.setInt(1, entidade.getIdcurso());
+            conn.setInt(2, entidade.getIddisciplina());
             conn.execute();
             commit();
         } catch (Exception ex) {
@@ -61,8 +61,9 @@ public class fatec_curso_disciplinaDao extends ComumDao {
 
     public void Update(fatec_curso_disciplina entidade) throws Exception {
         try {
-            PreparedStatement conn = BeginNewStatement("UPDATE fatec_curso_disciplina SET idDisciplina = ? WHERE idCurso = " + entidade.getIdcurso());
-            conn.setInt(1, entidade.getIddisciplina());
+            PreparedStatement conn = BeginNewStatement("UPDATE fatec_curso_disciplina SET IdCurso = ?, idDisciplina = ? WHERE idCurso = " + entidade.getIdcurso());
+            conn.setInt(1, entidade.getIdcurso());
+            conn.setInt(2, entidade.getIddisciplina());
             conn.execute();
             commit();
         } catch (Exception ex) {
@@ -72,10 +73,11 @@ public class fatec_curso_disciplinaDao extends ComumDao {
         }
     }
 
-    public void Delete(int ID) throws Exception {
+    public void Delete(int idCurso) throws Exception {
         try {
-            PreparedStatement conn = BeginNewStatement("DELETE FROM fatec_curso_disciplina WHERE idCurso = ?");
-            conn.setInt(1, ID);
+            PreparedStatement conn = BeginNewStatement("DELETE FROM fatec_curso_disciplina WHERE idCurso = ? ");
+            conn.setInt(1, idCurso);
+
             conn.execute();
             commit();
         } catch (Exception ex) {
